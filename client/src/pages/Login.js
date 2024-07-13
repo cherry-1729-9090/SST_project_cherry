@@ -3,13 +3,28 @@ import { Button, Form, Input } from "antd";
 import { Link , useNavigate } from "react-router-dom";
 
 import {message} from 'antd'
+import { axiosInstance } from '../calls';
+import { Loginuser } from '../calls/user';
 
 
 function Login() {
   
   const onFinish = async (values)=>{
     console.log(values)
-   
+    try{
+      const response = await Loginuser(values);
+      if(response.success){
+        console.log("Successfully logged in user!");
+        return message.success(response.message);
+      }
+      else{
+        message.error(response.message);
+      }
+    }
+    catch(err){
+      console.log(err);
+      message.error("Invalid username or passwd")
+    }
   }
 
  
