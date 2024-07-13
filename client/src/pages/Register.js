@@ -1,12 +1,27 @@
 import React, { useEffect } from "react";
 import { Form, Input, Button, Radio, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-
+import { registerUser } from "../calls/user";
 
 function Register() {
   const onFinish = async (values) => {
-    console.log(values);
-   
+    // console.log(values);
+
+    try {
+      const response = await registerUser(values);
+      if(response.success){
+        console.log("Successfully registered user!");
+        message.success(response.message);
+      }
+      else{
+        message.error(response.message);
+      }
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+      message.error("User already exists!");
+    }
+    
   };
 
 
